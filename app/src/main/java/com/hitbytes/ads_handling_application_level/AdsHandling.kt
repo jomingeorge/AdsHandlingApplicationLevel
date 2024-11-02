@@ -13,6 +13,7 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.util.Calendar
 
 object AdsHandling {
@@ -28,10 +29,10 @@ object AdsHandling {
             val currentTime = c.timeInMillis
 
             if (transitions > 3&&(currentTime-adIntervalTracker)>1000) {
-                val waitDialog = Dialog(context, android.R.style.Theme_Light_NoTitleBar_Fullscreen)
-                //Light or Black theme
-                waitDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                waitDialog.setContentView(R.layout.dialog_please_wait)
+                //todo Light or Black theme on xml
+                val waitDialog = MaterialAlertDialogBuilder(context)
+                    .setView(R.layout.dialog_please_wait)
+                    .create()
 
                 val editor = prefs.edit()
                 editor.putLong("adintervaltracker",currentTime)
@@ -43,7 +44,6 @@ object AdsHandling {
                         mInterstitialAd = null
                         onTransitionAction()
                         transitions = 0
-                        Log.d("MyApplicationdd", "reseted to 0")
                         loadAd(context)
                         val handler = Handler(activity.mainLooper)
                         handler.postDelayed({
@@ -72,6 +72,7 @@ object AdsHandling {
 
     fun loadAd(context: Context){
 
+        //todo premium checking
         //if (premiumuser==0) {
 
             val adRequest: AdRequest = AdRequest.Builder().build()

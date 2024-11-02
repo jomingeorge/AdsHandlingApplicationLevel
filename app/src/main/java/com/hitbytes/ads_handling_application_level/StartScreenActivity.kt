@@ -16,7 +16,7 @@ class StartScreenActivity : AppCompatActivity() {
             intentTransition()
         }else {
             val tutorialShown = "shown"
-            if (tutorialShown==""){
+            if (tutorialShown !="shown"){
                 intentTransition()
             }else {
                 showAdfunction()

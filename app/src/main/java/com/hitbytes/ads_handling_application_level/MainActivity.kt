@@ -1,12 +1,16 @@
 package com.hitbytes.ads_handling_application_level
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.hitbytes.ads_handling_application_level.AdsHandling.showAd
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         val button4 = findViewById<Button>(R.id.button4)
 
         button.setOnClickListener {
+
             showAd(context = this,
                 activity = this@MainActivity,
                 onTransitionAction = {
