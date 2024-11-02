@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
@@ -43,7 +44,7 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
     override fun onDestroy(owner: LifecycleOwner) {}
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        if(activity.localClassName!="com.google.android.gms.ads.AdActivity")
+        if(activity.localClassName!="com.google.android.gms.ads.AdActivity"&&activity.localClassName!="StartScreenActivity")
             ++transitions
     }
 
@@ -59,7 +60,7 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 
     override fun onActivityDestroyed(activity: Activity) {
-        if(activity.localClassName!="com.google.android.gms.ads.AdActivity")
+        if(activity.localClassName!="com.google.android.gms.ads.AdActivity"&&activity.localClassName!="StartScreenActivity")
             ++transitions
     }
 
@@ -70,7 +71,6 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
         private var loadTime: Long = 0
 
         fun loadAd(context: Context) {
-            // Do not load ad if there is an unused ad or one is already loading.
             if (isLoadingAd || isAdAvailable()) {
                 return
             }
@@ -113,9 +113,7 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
 
             if (!isAdAvailable()) {
                 onShowAdCompleteListener.onShowAdComplete()
-                if (premiumuser==0) {
-                    loadAd(activity)
-                }
+                loadAd(activity)
                 return
             }
 
@@ -124,11 +122,10 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
                 override fun onAdDismissedFullScreenContent() {
                     appOpenAd = null
                     isShowingAd = false
+                    transitions = 0
 
                     onShowAdCompleteListener.onShowAdComplete()
-                    if (premiumuser==0) {
-                        loadAd(activity)
-                    }
+                    loadAd(activity)
                 }
 
                 override fun onAdFailedToShowFullScreenContent(adError: AdError) {
@@ -136,9 +133,7 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
                     isShowingAd = false
 
                     onShowAdCompleteListener.onShowAdComplete()
-                    if (premiumuser==0) {
-                        loadAd(activity)
-                    }
+                    loadAd(activity)
                 }
 
                 override fun onAdShowedFullScreenContent() {
@@ -154,6 +149,7 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
                 editor.putLong("adintervaltracker",currentTime)
                 editor.apply()
 
+                Log.d("transitions",transitions.toString())
                 isShowingAd = true
                 appOpenAd?.show(activity)
             } else{
