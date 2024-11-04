@@ -58,7 +58,6 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
     override fun onActivityPaused(activity: Activity) {}
     override fun onActivityStopped(activity: Activity) {}
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
-
     override fun onActivityDestroyed(activity: Activity) {}
 
     private inner class AppOpenAdManager {
@@ -146,7 +145,6 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
                 editor.putLong("adintervaltracker",currentTime)
                 editor.apply()
 
-                Log.d("transitions",transitions.toString())
                 isShowingAd = true
                 appOpenAd?.show(activity)
             } else{
