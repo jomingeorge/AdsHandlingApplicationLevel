@@ -43,10 +43,7 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
     override fun onStop(owner: LifecycleOwner) {}
     override fun onDestroy(owner: LifecycleOwner) {}
 
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        if(activity.localClassName!="com.google.android.gms.ads.AdActivity"&&activity.localClassName!="StartScreenActivity")
-            ++transitions
-    }
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
 
     override fun onActivityStarted(activity: Activity) {
         if (!appOpenAdManager.isShowingAd) {
@@ -54,15 +51,15 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
         }
     }
 
-    override fun onActivityResumed(activity: Activity) {}
+    override fun onActivityResumed(activity: Activity) {
+        if(activity.localClassName!="com.google.android.gms.ads.AdActivity"&&activity.localClassName!="StartScreenActivity")
+            ++transitions
+    }
     override fun onActivityPaused(activity: Activity) {}
     override fun onActivityStopped(activity: Activity) {}
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 
-    override fun onActivityDestroyed(activity: Activity) {
-        if(activity.localClassName!="com.google.android.gms.ads.AdActivity"&&activity.localClassName!="StartScreenActivity")
-            ++transitions
-    }
+    override fun onActivityDestroyed(activity: Activity) {}
 
     private inner class AppOpenAdManager {
         private var appOpenAd: AppOpenAd? = null
