@@ -28,7 +28,7 @@ object AdsHandling {
             val c = Calendar.getInstance()
             val currentTime = c.timeInMillis
 
-            if (transitions > 3&&(currentTime-adIntervalTracker)>1000) {
+            if (transitions > 3&&(currentTime-adIntervalTracker)>10000) {
                 //todo Light or Black theme on xml
                 val waitDialog = MaterialAlertDialogBuilder(context)
                     .setView(R.layout.dialog_please_wait)

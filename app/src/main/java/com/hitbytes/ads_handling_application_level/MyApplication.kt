@@ -141,7 +141,7 @@ class MyApplication: Application(), DefaultLifecycleObserver, Application.Activi
             val adIntervalTracker = prefs.getLong("adintervaltracker", 0)
             val c = Calendar.getInstance()
             val currentTime = c.timeInMillis
-            if (transitions > 3&&(currentTime-adIntervalTracker)>1000) {
+            if (transitions > 3&&(currentTime-adIntervalTracker)>10000) {
                 val editor = prefs.edit()
                 editor.putLong("adintervaltracker",currentTime)
                 editor.apply()
