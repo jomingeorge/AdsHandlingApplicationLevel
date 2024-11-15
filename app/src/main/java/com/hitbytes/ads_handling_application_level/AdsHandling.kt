@@ -47,7 +47,10 @@ object AdsHandling {
                         loadAd(context)
                         val handler = Handler(activity.mainLooper)
                         handler.postDelayed({
-                            waitDialog.dismiss()
+                            try {
+                                if (!activity.isFinishing && !activity.isDestroyed && waitDialog.isShowing)
+                                    waitDialog.dismiss()
+                            }catch (_: Exception){}
                         }, 700)
                     }
 
